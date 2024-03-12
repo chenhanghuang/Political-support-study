@@ -1,4 +1,4 @@
-# Starter folder
+# Political support study
 
 ## Overview
 
