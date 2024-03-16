@@ -3,7 +3,7 @@ title: "Analyzing Demographic and Socioeconomic Characteristics of Biden Voters 
 author: 
   - Chenhang Huang
   - Zixuan Yang
-thanks: "Code and data are available at:https://github.com/chenhanghuang/Political-support-study/tree/main/Political%20support%20study"
+thanks: "Code and data are available at: https://github.com/chenhanghuang/Political-support-study/tree/main/Political%20support%20study"
 date: today
 date-format: long
 abstract: "This study examines the demographic and socioeconomic aspects that influence voter support for President Joe Biden in the 2020 US presidential election, using logistic regression models based on 2020 CES data. The findings show that Biden's triumph was driven by a varied coalition of supporters, including women, highly educated persons, and younger white voters. Understanding the demographics and inclinations of Biden voters provides vital insights into American politics and society, which can be used to shape future political campaigns and legislative goals. This work adds to our understanding of the processes affecting electoral outcomes and the implications for democratic government by shedding light on the elements influencing voter decisions."
@@ -41,14 +41,14 @@ This study, based on 2020 CES data, aims to delve into the characteristics of Bi
 
 By elucidating the demographics and socioeconomic status of Biden voters, this study fills gaps in our understanding of the 2020 presidential election outcome and its implications for the future of American election. Understanding the composition and preferences of Biden voters will provide valuable insights into the Biden administration and aid in predicting the outcome of the 2024 US presidential election.
 
-In the subsequent sections of this paper, we outline the methods used for data collection and analysis, discuss our findings.The sturcture of this paper is shown as follows. @sec-data will do the data analysis, and it includes the overview of the data, including the data source, the number of variables, and their definition. @sec-model will introduce the logistic model and the corresponding assumptions. @sec-result focuses on the analysis of the results of the logistic regression. In the end,  discussion on these results are proposed in @sec-discussion. 
+In the subsequent sections of this paper, we outline the methods used for data collection and analysis, discuss our findings.The sturcture of this paper is shown as follows. @sec-data will do the data analysis, and it includes the overview of the data, including the data source, the number of variables, and their definition. @sec-model will introduce the logistic model and the corresponding assumptions. @sec-result focus on the analysis of the results of the logistic regression. In the end,  discussion on these results are proposed in @sec-discussion. 
 
 
 # Data {#sec-data}
 
 ## Data Description
 
-The 2020 Cooperative Election Study (CES) dataset by @ces2020 serves as the foundation for our analysis. This dataset represents the final release of the 2020 CES Common Content Dataset, encompassing responses from a nationally representative sample of 61,000 American adults. It includes survey data, a comprehensive data guide, and questionnaires. Notably, the dataset incorporates vote validation conducted by Catalist, adding an additional layer of reliability to the electoral data.
+The 2020 Cooperative Election Study (CES) dataset serves as the foundation for our analysis. This dataset represents the final release of the 2020 CES Common Content Dataset, encompassing responses from a nationally representative sample of 61,000 American adults  [@ces2020]. It includes survey data, a comprehensive data guide, and questionnaires. Notably, the dataset incorporates vote validation conducted by Catalist, adding an additional layer of reliability to the electoral data.
 
 
 The CES survey has a longstanding tradition of capturing US political opinion. The sampling methodology, as outlined by @ces2020, utilizes a matching approach, balancing sampling concerns with cost considerations effectively. While there may be similar datasets available, such as those from other reputable survey organizations or academic institutions, the CES dataset was selected for its extensive coverage, rigorous sampling methodology, and inclusion of vote validation data. Alternative datasets may not offer the same level of representativeness or comprehensive coverage of political opinion among American adults. Therefore, the CES dataset was deemed the most suitable and reliable choice for our research purposes.
@@ -73,8 +73,8 @@ ces2020 |>
   facet_wrap(facets = vars(gender)) +
   theme_minimal() +
   labs(
-    x = "Highest education",
-    y = "Number of respondents",
+    x = "Highest Education",
+    y = "Number of Respondents",
     fill = "Voted for"
   ) +
   coord_flip() +
@@ -97,8 +97,8 @@ ces2020 |>
   facet_wrap(facets = vars(white)) +
   theme_minimal() +
     labs(
-    x = "voter's age",
-    y = "Number of respondents",
+    x = "Voter's Age",
+    y = "Number of Respondents",
     fill = "Voted for"
   ) 
 
@@ -106,13 +106,15 @@ ces2020 |>
 
 
 
-We can access the CES using the package dataverse by @dataverseR in the rstudio of @citeR. Upon examining the actual data, we noticed that there were no direct variables indicating the choice between Biden and Trump. However, upon consulting the data manual, we found that when the variable "CC20_410" is coded as 1, it signifies support for Biden, while a code of 2 indicates support for Trump. Therefore, we filtered the dataset to include only respondents with "CC20_410" values of 1 and 2. Furthermore, the CES dataset only provides respondents' birth years. To determine their ages, we subtracted their birth year from 2020. Gender information in the CES dataset is categorized as "female" and "male," with a variable value of 1 representing "male" and 2 representing "female." Finally, the variable "educ" ranges from 1 to 6 in the CES dataset, representing different levels of education attainment: "No Highschool," "High school graduate," "Some college," "2-year college," "4-year university," and "Post-grad."
+We can access the CES using the package dataverse by @dataverseR in rstudio [@citeR]. Upon examining the actual data, we noticed that there were no direct variables indicating the choice between Biden and Trump. However, upon consulting the data manual, we found that when the variable "CC20_410" is coded as 1, it signifies support for Biden, while a code of 2 indicates support for Trump. Therefore, we filtered the dataset to include only respondents with "CC20_410" values of 1 and 2. Furthermore, the CES dataset only provides respondents' birth years. To determine their ages, we subtracted their birth year from 2020. Gender information in the CES dataset is categorized as "female" and "male," with a variable value of 1 representing "male" and 2 representing "female." Finally, the variable "educ" ranges from 1 to 6 in the CES dataset, representing different levels of education attainment: "No Highschool," "High school graduate," "Some college," "2-year college," "4-year university," and "Post-grad."
 
-After generating the necessary data and save it into csv file using readr package by @readrR, we retained only the relevant five variables and removed observations with missing values using tidyverse package by @tidyverseR. Ultimately, the dataset consists of 43,554 observations and 5 variables. @fig-fig1 illustrates presidential preferences categorized by gender and highest education level by using the ggplot2 package by @ggplot2R. Among female voters, the number of individuals who voted for Biden significantly outweighs those who voted for Trump, especially among voters with a 4-year university degree. Trump only holds a slight edge over Biden among voters with a high school diploma. Overall, @fig-fig1  indicates that female and highly educated voters are more inclined to choose Biden, and Biden enjoys a notable advantage over Trump among all voters. Additionally, @fig-fig2 presents presidential preferences categorized by race and age. Among non-white voters, Biden maintains an overwhelming advantage, while among white voters, Biden's advantage is less pronounced. Particularly among white voters aged 50 and above, Biden does not hold a significant advantage, whereas among white voters under 50, Biden exhibits a slight edge.
+After generating the necessary data and save it into csv file using readr package [@readrR], we retained only the relevant five variables and removed observations with missing values using tidyverse package by @tidyverseR. Ultimately, the dataset consists of 43,554 observations and 5 variables. @fig-fig1 illustrates presidential preferences categorized by gender and highest education level by using the ggplot2 package [@ggplot2R]. Among female voters, the number of individuals who voted for Biden significantly outweighs those who voted for Trump, especially among voters with a 4-year university degree. Trump only holds a slight edge over Biden among voters with a high school diploma. Overall, @fig-fig1  indicates that female and highly educated voters are more inclined to choose Biden, and Biden enjoys a notable advantage over Trump among all voters. Additionally, @fig-fig2 presents presidential preferences categorized by race and age. Among non-white voters, Biden maintains an overwhelming advantage, while among white voters, Biden's advantage is less pronounced. Particularly among white voters aged 50 and above, Biden does not hold a significant advantage, whereas among white voters under 50, Biden exhibits a slight edge.
 
 
 
 # Model {#sec-model}
+
+Our study investigates the categorial variable of support or opposition to Biden. Traditional Ordinary Least Squares (OLS) regression is suitable for continuous outcome variables and assumes the outcome follows a normal distribution. Therefore, linear regression methods cannot be used to estimate individual support for Biden. 
 
 Considering that the output variable $y_i$ only has two possible values (0 or 1), we assume that $y_i$ follows a Bernoulli distribution with probability $\pi_i$. To establish the relationship between the predictors and the probability $\pi_i$., we employ logistic regression by @wang2015forecasting. The logistic regression model is defined as:
 
@@ -128,12 +130,12 @@ $$\beta_4 \sim Normal(0,2.5)$$
 where gender, education, age and white are the predictors in the model, and we assume their coefficients follow a normal distribution with standard derivation 2.5. In order to predict these coefficients, we use stan_glm() from the package rstanarm by @rstanarm. This model is written in short-hand, in practice, these categorical variables will be converted into a series of indicator variables with different coefficients. 
 
 
-# Result {#sec-result}
+# Results {#sec-result}
 
 
 After conducting regression analysis on all variables, the results are presented in @tbl-table1 by using the modelsummary package by @modelsummaryR. @tbl-table1 displays the estimated values of each parameter along with their corresponding standard deviations. For a normal distribution, the critical value at the 0.05 level is 1.96. Hence, we can use the ratio between beta and its standard deviation to obtain the test statistic and determine its significance. The absolute values of the test statistics for all variables in the table are greater than 1.96, indicating significance at the 0.05 level. The log odds ratio of voting for female voters is 0.399 higher than male voters when holding education, age, and race constant. @fig-fig3 displays the 95% credibility interval of the estimated coefficients for the predictors. Notably, none of the intervals include 0, indicating that all coefficients are significant at the 95% level. The length of each bar represents the width of the credible interval, with the point indicating the estimated coefficient value. This visualization underscores the significance of the predictors in influencing the likelihood of voting for Biden in the 2020 US presidential election.
 
-This result is consistent with @fig-fig1.Regarding education, there are five indicators, with 2-year college as the reference level. The coefficients for 4-year education and post-graduation are positive, with the coefficient for 4-year education being less than that for post-graduation education. This suggests that individuals with higher education levels are more likely to choose Biden. Conversely, the coefficients for high school graduate and no high school graduate are negative, indicating that individuals with lower levels of education are less likely to choose Biden. These results align with the findings from @fig-fig1. The coefficient for age is negative, indicating that as voters age, the probability of choosing Biden decreases, consistent with the distribution of white voters shown in @fig-fig2. Additionally, the coefficient for non-white voters is 0.89, indicating a stronger preference for Biden among non-white voters. The results are highly consistent with those from @fig-fig1 and @fig-fig2, demonstrating that logistic regression can effectively estimate the relationship between age, education, gender, race, and the choice of voting for Biden.
+This result is consistent with @fig-fig1 .Regarding education, there are five indicators, with 2-year college as the reference level. The coefficients for 4-year education and post-graduation are positive, with the coefficient for 4-year education being less than that for post-graduation education. This suggests that individuals with higher education levels are more likely to choose Biden. Conversely, the coefficients for high school graduate and no high school graduate are negative, indicating that individuals with lower levels of education are less likely to choose Biden. These results align with the findings from @fig-fig1. The coefficient for age is negative, indicating that as voters age, the probability of choosing Biden decreases, consistent with the distribution of white voters shown in @fig-fig2. Additionally, the coefficient for non-white voters is 0.89, indicating a stronger preference for Biden among non-white voters. The results are highly consistent with those from @fig-fig1 and @fig-fig2, demonstrating that logistic regression can effectively estimate the relationship between age, education, gender, race, and the choice of voting for Biden.
 
 
 
@@ -164,7 +166,7 @@ modelsummary(
 #| message: false
 
 modelplot(political_preferences, conf_level = 0.95) +
-  labs(x = "95 per cent credibility interval")
+  labs(x = "95 Percent Credibility Interval")
 
 ```
 
